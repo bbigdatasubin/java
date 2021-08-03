@@ -108,13 +108,43 @@ public class MemberDAO {
 
 	// 클라이언트로부터 수정하는 자료를 입력받아서  수정
 	public void modMember(MemberVO memberVO) {
-		// TODO Auto-generated method stub
-		
+		String id = memberVO.getId();
+		String pwd = memberVO.getPwd();
+		String name = memberVO.getName();
+		String email = memberVO.getEmail();
+		try {
+			conn = dataFactory.getConnection();
+			String query = "update t_member set pwd=?, name=?, email=? where id=?";
+			System.out.println(query);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, pwd);
+			pstmt.setString(2, name);
+			pstmt.setString(3, email);
+			pstmt.setString(4, id);
+			pstmt.executeUpdate();
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// 클라이언트로부터 삭제하는 id를 입력받아서 삭제
 	public void delMember(String id) {
-		// TODO Auto-generated method stub
+		try {
+			conn = dataFactory.getConnection();
+			String query = "delete from t_member where id=?";
+			System.out.println(query);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
